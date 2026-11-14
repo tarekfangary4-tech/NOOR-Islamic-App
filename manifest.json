@@ -1,0 +1,13 @@
+
+{
+  "name": "نور - تطبيق إسلامي شامل",
+  "short_name": "نور",
+  "description": "القرآن الكريم والأذكار والأحاديث ومواقيت الصلاة",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#10291f",
+  "theme_color": "#10291f",
+  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl"
+}
