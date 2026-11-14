@@ -1,0 +1,9 @@
+
+{
+  "appId": "com.noor.islamicapp",
+  "appName": "نور",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
