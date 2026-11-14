@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10291f">
+    <meta name="description" content="نور - تطبيق إسلامي شامل للقرآن الكريم والأذكار والأحاديث ومواقيت الصلاة">
+
+    <title>نور | NOOR</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- شاشة البداية -->
+    <section id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-icon">☪</div>
+            <h1>نُور</h1>
+            <p class="splash-subtitle">رفيقك إلى الطمأنينة</p>
+
+            <div class="splash-divider"></div>
+
+            <h3>القائمين على عمل هذا التطبيق</h3>
+
+            <p class="owner-name">أ. أحمد سعيد فنجري</p>
+            <p class="owner-name">أ. أروى أشرف أنور</p>
+
+            <p class="splash-dua">
+                نسأل الله أن يجعله عملًا نافعًا وخالصًا لوجهه الكريم
+            </p>
+        </div>
+    </section>
+
+    <!-- التطبيق -->
+    <div id="app" class="app hidden">
+
+        <header class="top-header">
+            <div>
+                <h1>نُور <span>☪</span></h1>
+                <p>رفيقك إلى الطمأنينة</p>
+            </div>
+
+            <button class="icon-button" onclick="showSection('settings')" aria-label="الإعدادات">
+                ⚙
+            </button>
+        </header>
+
+        <main class="main-content">
+
+            <!-- الرئيسية -->
+            <section id="home" class="page-section active">
+
+                <div class="welcome-card">
+                    <span>مرحبًا بك في نور</span>
+                    <h2>اجعل لسانك رطبًا بذكر الله</h2>
+                    <p>ابدأ يومك بذكر الله وقراءة القرآن الكريم.</p>
+                </div>
+
+                <div class="section-heading">
+                    <h2>أقسام التطبيق</h2>
+                </div>
+
+                <div class="features-grid">
+
+                    <button class="feature-card" onclick="showSection('quran')">
+                        <span class="feature-icon">📖</span>
+                        <strong>القرآن الكريم</strong>
+                        <small>المصحف الشريف كاملًا</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('readers')">
+                        <span class="feature-icon">🎧</span>
+                        <strong>القراء والتلاوات</strong>
+                        <small>استمع إلى القراء</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('tafsir')">
+                        <span class="feature-icon">📚</span>
+                        <strong>تفسير القرآن</strong>
+                        <small>تفسير كل آية</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('adhkar')">
+                        <span class="feature-icon">🤲</span>
+                        <strong>الأذكار والأدعية</strong>
+                        <small>أذكار الصباح والمساء</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('hadith')">
+                        <span class="feature-icon">📜</span>
+                        <strong>الحديث النبوي</strong>
+                        <small>موسوعة الأحاديث</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('prayer')">
+                        <span class="feature-icon">🕌</span>
+                        <strong>مواقيت الصلاة</strong>
+                        <small>الصلوات الخمس</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('qibla')">
+                        <span class="feature-icon">🧭</span>
+                        <strong>اتجاه القبلة</strong>
+                        <small>اعرف اتجاه القبلة</small>
+                    </button>
+
+                    <button class="feature-card" onclick="showSection('tasbeeh')">
+                        <span class="feature-icon">📿</span>
+                        <strong>السبحة الإلكترونية</strong>
+                        <small>عداد التسبيح</small>
+                    </button>
+
+                </div>
+
+                <div class="daily-card">
+                    <h3>🌙 وردك اليومي</h3>
+                    <p>اجعل لك نصيبًا كل يوم من القرآن والذكر والدعاء.</p>
+                </div>
+
+            </section>
+
+            <!-- الأقسام -->
+            <section id="quran" class="page-section">
+                <h2>📖 القرآن الكريم</h2>
+                <p>المصحف الشريف – 114 سورة.</p>
+                <div id="surahList" class="content-list">
+                    جاري تجهيز المصحف الشريف...
+                </div>
+            </section>
+
+            <section id="readers" class="page-section">
+                <h2>🎧 القراء والتلاوات</h2>
+                <div id="readerList" class="content-list"></div>
+            </section>
+
+            <section id="tafsir" class="page-section">
+                <h2>📚 تفسير القرآن الكريم</h2>
+                <p>اختر السورة والآية لعرض تفسيرها من مصادر معتمدة.</p>
+            </section>
+
+            <section id="adhkar" class="page-section">
+                <h2>🤲 الأذكار والأدعية</h2>
+                <p>أذكار الصباح والمساء وسائر الأذكار اليومية.</p>
+            </section>
+
+            <section id="hadith" class="page-section">
+                <h2>📜 الحديث النبوي</h2>
+                <p>موسوعة الحديث النبوي الشريف.</p>
+            </section>
+
+            <section id="prayer" class="page-section">
+                <h2>🕌 مواقيت الصلاة</h2>
+                <p>مواقيت الصلوات الخمس والتنبيهات.</p>
+                <div id="prayerTimes" class="content-list">
+                    سيتم ربط مواقيت الصلاة بالموقع الجغرافي.
+                </div>
+            </section>
+
+            <section id="qibla" class="page-section">
+                <h2>🧭 اتجاه القبلة</h2>
+                <p>قريبًا: تحديد اتجاه القبلة باستخدام البوصلة.</p>
+            </section>
+
+            <section id="tasbeeh" class="page-section">
+                <h2>📿 السبحة الإلكترونية</h2>
+                <div class="tasbeeh-box">
+                    <p>عدد التسبيحات</p>
+                    <div id="counter">0</div>
+                    <button class="primary-button" onclick="increaseTasbeeh()">سبّح</button>
+                    <button class="reset-button" onclick="resetTasbeeh()">إعادة التصفير</button>
+                </div>
+            </section>
+
+            <section id="settings" class="page-section">
+                <h2>⚙ الإعدادات</h2>
+                <p>إعدادات تطبيق نور.</p>
+                <button class="feature-card about-button" onclick="showSection('about')">
+                    عن التطبيق والقائمين عليه
+                </button>
+            </section>
+
+            <section id="about" class="page-section">
+                <h2>عن تطبيق نور</h2>
+                <p>تطبيق إسلامي لخدمة القرآن الكريم والسنة النبوية والأذكار.</p>
+                <div class="about-card">
+                    <h3>القائمين على عمل هذا التطبيق</h3>
+                    <p>أ. أحمد سعيد فنجري</p>
+                    <p>أ. أروى أشرف أنور</p>
+                </div>
+            </section>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showSection('home', this)">
+                <span>⌂</span>
+                الرئيسية
+            </button>
+
+            <button class="nav-item" onclick="showSection('quran', this)">
+                <span>📖</span>
+                القرآن
+            </button>
+
+            <button class="nav-item" onclick="showSection('adhkar', this)">
+                <span>🤲</span>
+                الأذكار
+            </button>
+
+            <button class="nav-item" onclick="showSection('prayer', this)">
+                <span>🕌</span>
+                الصلاة
+            </button>
+        </nav>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
