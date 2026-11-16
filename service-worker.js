@@ -1,58 +1,42 @@
-
-"use strict";
-
-const CACHE_NAME = "noor-app-v1";
-
-const FILES_TO_CACHE = [
-    "./",
-    "./index.html",
-    "./manifest.json",
-    "./css/style.css",
-    "./js/app.js"
-];
-
-self.addEventListener("install", function (event) {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(function (cache) {
-            return cache.addAll(FILES_TO_CACHE);
-        })
-    );
-
-    self.skipWaiting();
-});
-
-self.addEventListener("activate", function (event) {
-    event.waitUntil(
-        caches.keys().then(function (keys) {
-            return Promise.all(
-                keys.filter(function (key) {
-                    return key !== CACHE_NAME;
-                }).map(function (key) {
-                    return caches.delete(key);
-                })
-            );
-        })
-    );
-
-    self.clients.claim();
-});
-
-self.addEventListener("fetch", function (event) {
-
-    if (event.request.method !== "GET") return;
-
-    event.respondWith(
-        caches.match(event.request).then(function (cachedFile) {
-
-            if (cachedFile) return cachedFile;
-
-            return fetch(event.request).then(function (response) {
-                return response;
-            }).catch(function () {
-                return caches.match("./index.html");
-            });
-
-        })
-    );
-
-});
+name: Build NOOR Android APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - name: Install SDK packages
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+      - run: npm install
+      - run: npm run build
+      - run: npx cap add android
+      - name: Generate Android launcher icons
+        run: npx capacitor-assets generate --android
+      - run: npx cap sync android
+      - name: Add Android permissions
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />\n    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />' "$M"
+      - name: Build APK
+        run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NOOR-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
